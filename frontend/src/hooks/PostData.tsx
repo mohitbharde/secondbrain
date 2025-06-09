@@ -60,6 +60,7 @@ export function PostData() {
 
     //alert(tagsArray);
     setTags(tagsArray);
+    console.log(tags);
 
     mutation.mutate({
       title,
