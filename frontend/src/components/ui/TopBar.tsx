@@ -1,5 +1,4 @@
 import { Button } from "./Button";
-import { ShareIcon } from "../../icons/ShareIcon";
 import { PlusIcon } from "../../icons/Plusicon";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,6 +10,7 @@ export function TopBar() {
     const temp = queryClient.getQueryData(["mainData"]);
     queryClient.setQueryData(["fetchdata"], temp);
   }
+
   return (
     <div className="flex w-full pl-3.5 py-5 items-center justify-between">
       <div
@@ -22,14 +22,6 @@ export function TopBar() {
 
       <div className="flex justify-end px-3 py-2">
         <span className="flex gap-2">
-          <Button
-            variant="secondary"
-            text={"Share"}
-            size="md"
-            onClick={() => console.log("share button clicked")}
-            startIcon={<ShareIcon size="md" />}
-          />
-
           <Button
             variant="primary"
             text={"Add content"}

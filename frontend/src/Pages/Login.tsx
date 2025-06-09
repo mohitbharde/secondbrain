@@ -2,27 +2,43 @@ import { useState } from "react";
 import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { Backend_url } from "../../config";
+import { GridLoader } from "react-spinners";
 import axios from "axios";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
 
   async function onSubmit() {
+    setIsLogin(true);
     try {
       const response = await axios.post(Backend_url + "/login", {
         username,
         password,
       });
+      setIsLogin(false);
+      console.log(response.status);
       const jwt = response.data.token;
       localStorage.setItem("token", jwt);
+
       navigate("/dashboard");
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       console.log(err);
       alert(err.response.data.message);
     }
+
+    setIsLogin(false);
   }
+
+  if (isLogin)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <GridLoader />
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-2 w-full h-screen bg-gray-100  items-center justify-center">
@@ -68,6 +84,7 @@ export const Login = () => {
             size="md"
             text="Login"
             onClick={() => onSubmit()}
+            disabled={isLogin}
           />
         </div>
 

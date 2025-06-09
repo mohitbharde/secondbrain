@@ -1,63 +1,8 @@
-import { useState } from "react";
 import { Close } from "../../icons/Close";
-import { Button } from "./Button";
-//import axios from "axios";
-//import { Backend_url } from "../../../config";
-//import { useContent } from "../../hooks/useContext";
+
 import { PostData } from "../../hooks/PostData";
 
 export const CreateContent = ({ open, setOpen }) => {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [tag, setTags] = useState("");
-  const [type, setType] = useState("document");
-  //const { refresh } = useContent();
-
-  async function onSubmit() {
-    const tags = tag.split(" ");
-    for (let i = 0; i < tags.length; i++) {
-      tags[i] = tags[i].trim();
-    }
-
-    PostData();
-
-    setTags("");
-    setLink("");
-    setTags("");
-    setType("");
-    setOpen((prev) => !prev);
-
-    // try {
-    //   const response = await axios.post(
-    //     `${Backend_url}/content`,
-    //     {
-    //       title,
-    //       link,
-    //       type,
-    //       tags,
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: localStorage.getItem("token"),
-    //       },
-    //     }
-    //   );
-    //   if (response.status === 200) {
-    //     setTags("");
-    //     setLink("");
-    //     setTags("");
-    //     setType("");
-    //     setOpen((prev) => !prev);
-    //     //alert(response.data.message);
-    //     //refresh();
-    //   } else {
-    //     alert(response.data.message);
-    //   }
-    // } catch (err) {
-    //   console.log("error occur while create content  " + err);
-    // }
-  }
-
   return (
     <div>
       {open && (

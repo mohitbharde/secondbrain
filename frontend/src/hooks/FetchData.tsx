@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Backend_url } from "../../config";
 import { Card } from "../components/ui/Card";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 async function fetchdata() {
   const response = await axios.get(`${Backend_url}/content`, {
@@ -10,13 +11,11 @@ async function fetchdata() {
       Authorization: localStorage.getItem("token"),
     },
   });
-
-  console.log("Fetching data...  " + JSON.stringify(response.data.content));
   return response.data.content;
 }
 
 export function FetchData() {
-  const { isFetched } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["mainData"],
     queryFn: fetchdata,
   });
@@ -28,17 +27,18 @@ export function FetchData() {
     queryClient.setQueryData(["fetchdata"], temp);
   }
 
-  const { data, isPending } = useQuery({
+  const { data }: any = useQuery({
     queryKey: ["fetchdata"],
     queryFn: updateToAll,
   });
 
   useEffect(() => {
     updateToAll();
-  }, [isFetched]);
+  }, [isLoading]);
 
-  if (isPending) return <div>... loading </div>;
-  if (data.length == 0)
+  if (isLoading) return <div>... loading </div>;
+
+  if (data?.length == 0)
     return (
       <div className="w-full h-screen flex justify-center items-center">
         {" "}
@@ -46,7 +46,7 @@ export function FetchData() {
       </div>
     );
 
-  console.log("All cached data:", queryClient.getQueryCache().findAll());
+  //console.log("All cached data:", queryClient.getQueryCache().findAll());
   return (
     <>
       {data?.map(({ type, link, title, tags, _id }) => (

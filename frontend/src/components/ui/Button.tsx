@@ -7,6 +7,7 @@ export interface ButtonProps {
   startIcon?: ReactElement;
   endIcon?: ReactElement;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const variantStyle = {
@@ -27,6 +28,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       onClick={props.onClick}
+      disabled={props.disabled}
       className={`
                         ${variantStyle[props.variant]} 
                         ${defaultStyles}

@@ -1,27 +1,40 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Backend_url } from "../../config";
+import { GridLoader } from "react-spinners";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
   async function onSubmit() {
+    setIsLogin(true);
     try {
       const response = await axios.post(Backend_url + "/signup", {
         email: username,
         password,
       });
       console.log(response);
+      setIsLogin(false);
       if (response.status == 201) navigate("/login");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       alert(err.response.data.message);
     }
+    setIsLogin(false);
   }
+
+  if (isLogin)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <GridLoader />
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-2 w-full h-screen bg-gray-100  items-center justify-center">
@@ -67,6 +80,7 @@ export const Signup = () => {
             size="md"
             text="Sign up"
             onClick={() => onSubmit()}
+            disabled={isLogin}
           />
         </div>
 

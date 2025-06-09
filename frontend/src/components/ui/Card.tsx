@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Twitter } from "../../icons/Twitter";
 import { Youtube } from "../../icons/Youtube";
 import { Document } from "../../icons/Document";
@@ -12,7 +13,7 @@ interface CardProps {
   title: string;
   link: string;
   tags?: [string];
-  id?: object;
+  id?: object | any;
 }
 
 const contentType = {
@@ -38,11 +39,12 @@ export const Card = (props: CardProps) => {
 
   async function deleteItem(id) {
     const response = await axios.delete(`${Backend_url}/deleteContent`, {
-      data: { id: id },
+      data: { id: props.id },
       headers: {
         Authorization: localStorage.getItem("token"),
       },
     });
+    console.log(id);
     return response.data;
   }
 
@@ -50,8 +52,8 @@ export const Card = (props: CardProps) => {
     mutationFn: (id) => deleteItem(id),
     onSuccess: (data, id) => {
       console.log("mutation : " + JSON.stringify(data) + " " + id);
-      queryClient.setQueryData(["fetchdata"], (curElem) => {
-        const filterdata = curElem?.filter((post) => post._id !== id);
+      queryClient.setQueryData(["fetchdata"], (curElem: any) => {
+        const filterdata = curElem?.filter((post) => post._id !== props.id);
         return filterdata;
       });
     },
@@ -72,7 +74,7 @@ export const Card = (props: CardProps) => {
           <a href={props.link} target="_blank">
             <ShareIcon size="md" />
           </a>
-          <button onClick={() => deleteMutation.mutateAsync(props.id)}>
+          <button onClick={() => deleteMutation.mutate()}>
             <Delete />
           </button>
         </span>

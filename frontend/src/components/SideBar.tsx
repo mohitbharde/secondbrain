@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQueryClient } from "@tanstack/react-query";
 import { BrainIcon } from "../icons/BrainIcon";
 import { Document } from "../icons/Document";
@@ -17,7 +18,7 @@ export function SideBar() {
         <div
           className="flex items-center gap-2.5 py-4 hover:text-blue-500 hover:cursor-pointer"
           onClick={() => {
-            const temp = queryClient.getQueryData(["mainData"]);
+            const temp: any = queryClient.getQueryData(["mainData"]);
             queryClient.setQueryData(["fetchdata"], () => {
               return temp?.filter((data) => data.type == "twitter");
             });
@@ -30,7 +31,7 @@ export function SideBar() {
         <div
           className="flex items-center gap-2.5 py-4 hover:text-blue-500 hover:cursor-pointer"
           onClick={() => {
-            const temp = queryClient.getQueryData(["mainData"]);
+            const temp: any = queryClient.getQueryData(["mainData"]);
             queryClient.setQueryData(["fetchdata"], () => {
               return temp?.filter((data) => data.type == "youtube");
             });
@@ -43,7 +44,7 @@ export function SideBar() {
         <div
           className="flex items-center gap-2.5 py-4 hover:text-blue-500 hover:cursor-pointer"
           onClick={() => {
-            const temp = queryClient.getQueryData(["mainData"]);
+            const temp: any = queryClient.getQueryData(["mainData"]);
             queryClient.setQueryData(["fetchdata"], () => {
               return temp?.filter((data) => data.type == "document");
             });

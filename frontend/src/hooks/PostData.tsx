@@ -71,10 +71,17 @@ export function PostData() {
 
   const mutation = useMutation<unknown, Error, NewContent>({
     mutationFn: (newContent) => postdata(newContent),
-    onSuccess: (data) => {
+    onSuccess: async () => {
       //console.log("Mutation success", data);
-      queryClient.invalidateQueries({ queryKey: ["mainData"] });
-      queryClient.refetchQueries({ queryKey: ["mainData"] });
+      await queryClient.invalidateQueries({ queryKey: ["mainData"] });
+      await queryClient.refetchQueries({ queryKey: ["mainData"] });
+
+      console.log(
+        "inside the post content  " + queryClient.getQueryData(["mainData"])
+      );
+
+      queryClient.invalidateQueries({ queryKey: ["fetchdata"] });
+      queryClient.refetchQueries({ queryKey: ["fetchdata"] });
     },
     onSettled: () => {
       setTags([]);
@@ -83,6 +90,9 @@ export function PostData() {
       setType("document");
       setTitle("");
       navigate("/dashboard");
+    },
+    onError: (err) => {
+      alert(err);
     },
   });
 
