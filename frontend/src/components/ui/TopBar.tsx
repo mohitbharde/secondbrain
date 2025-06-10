@@ -28,7 +28,7 @@ export function TopBar() {
             size="md"
             onClick={() => {
               localStorage.setItem("token", "");
-              navigate("/");
+              navigate("/login");
             }}
           />
           <Button
