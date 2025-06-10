@@ -54,7 +54,7 @@ export const login = async (req: Request, res: Response) => {
       token,
     });
   } catch (error: any) {
-    res.json({
+    res.status(StatusCode.INTERNAL_SERVER_ERROR).json({
       message: "error while login ",
       error: error.message,
     });

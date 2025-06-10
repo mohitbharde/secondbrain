@@ -23,6 +23,15 @@ export function TopBar() {
       <div className="flex justify-end px-3 py-2">
         <span className="flex gap-2">
           <Button
+            variant="secondary"
+            text={"Logout"}
+            size="md"
+            onClick={() => {
+              localStorage.setItem("token", "");
+              navigate("/");
+            }}
+          />
+          <Button
             variant="primary"
             text={"Add content"}
             size="md"
